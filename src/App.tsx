@@ -1,28 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Button} from './components/Button';
 
+type FilterType = 'all' | 'dollar' | 'ruble'
+
 function App() {
-	const Button1For = (subscriber: string, age: number) => {
-		console.log(subscriber, age)
+
+	// let a = 1
+
+	let [a, setA] = useState(1)
+
+	const number = () => {
+		setA(++a)
 	}
 
-	const Button2For = (subscriber: string) => {
-		console.log(subscriber)
-	}
-
-	const Button3For = () => {
-		console.log('I\'m stupid')
+	const reset = () => {
+		setA(0)
 	}
 
 	return (
 		<>
-			<Button name={'MyYouTubeChannel-1'} callBack={() => (Button1For('I\'m Ivan', 21))}/>
-			<Button name={'MyYouTubeChannel-2'} callBack={() => (Button2For('I\'m Anna'))}/>
-			<Button name={'Stupid Button'} callBack={Button3For}/>
+			<h1>{a}</h1>
+			<button onClick={number}>number</button>
+			<button onClick={reset}>reset</button>
 		</>
-	);
-
+	)
 }
 
 export default App;
