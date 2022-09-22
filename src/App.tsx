@@ -1,18 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Header} from "./site/Header";
-import {Body} from "./site/Body";
-import {Footer} from "./site/Footer";
+import {Button} from './components/Button';
 
 function App() {
-  return (
-      <>
-        <Header title={"NEW HEADER"}/>
-        <Body titleForBody={"NEW BODY"}/>
-        <Footer titleForFooter={"NEW FOOTER"}/>
-      </>
-  );
+	const Button1For = (subscriber: string, age: number) => {
+		console.log(subscriber, age)
+	}
+
+	const Button2For = (subscriber: string) => {
+		console.log(subscriber)
+	}
+
+	const Button3For = () => {
+		console.log('I\'m stupid')
+	}
+
+	return (
+		<>
+			<Button name={'MyYouTubeChannel-1'} callBack={() => (Button1For('I\'m Ivan', 21))}/>
+			<Button name={'MyYouTubeChannel-2'} callBack={() => (Button2For('I\'m Anna'))}/>
+			<Button name={'Stupid Button'} callBack={Button3For}/>
+		</>
+	);
+
 }
 
 export default App;
