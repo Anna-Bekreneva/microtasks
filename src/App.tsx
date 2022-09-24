@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Button} from './components/Button';
+import {Money, MoneyOneType} from './components/Money';
+
+export type ButtonFilterType = 'all' | 'dollar' | 'ruble'
 
 function App() {
-	type FilterType = 'all' | 'dollar' | 'ruble'
-	const [money, setMoney] = useState([
+	const [money, setMoney] = useState<Array<MoneyOneType>>([
 		{ banknots: 'Dollars', value: 100, number: ' a1234567890' },
 		{ banknots: 'Dollars', value: 50, number: ' z1234567890' },
 		{ banknots: 'RUBLS', value: 100, number: ' w1234567890' },
@@ -15,39 +16,28 @@ function App() {
 		{ banknots: 'RUBLS', value: 50, number: ' v1234567890' },
 	])
 
-	const [filter, setFilter] = useState<FilterType>('all')
-
-	const onClickFilterHundler = (nameButton: FilterType) => {
-		setFilter(nameButton)
+	const moneyRemove = (number: string) => {
+		setMoney(money.filter(el => el.number !== number))
 	}
 
-	let currentMoney = money;
-	if (filter === "ruble") {
-		currentMoney = money.filter((el) => el.banknots === "RUBLS")
+	const [filters, setFilters] = useState<ButtonFilterType>('all')
+
+	const filterMoney = (nameButton: ButtonFilterType) => {
+		setFilters(nameButton)
 	}
-	if (filter === "dollar") {
-		currentMoney = money.filter((el) => el.banknots === "Dollars")
+
+	let filtersMoney = money;
+
+	if (filters === 'ruble') {
+		filtersMoney = money.filter(el => el.banknots === 'RUBLS')
+	}
+
+	if (filters === 'dollar') {
+		filtersMoney = money.filter(el => el.banknots === 'Dollars')
 	}
 
 	return (
-		<>
-			<ul>
-				{currentMoney.map((objFromMontyArr, index) => {
-					return (
-						<li key={index}>
-							<span></span>
-							<span>{objFromMontyArr.banknots}</span>
-							<span>{objFromMontyArr.value}</span>
-							<span>{objFromMontyArr.number}</span>
-						</li>
-					);
-				})}
-			</ul>
-
-			<button onClick={() => (onClickFilterHundler("all"))}>all</button>
-			<button onClick={() => (onClickFilterHundler('ruble'))}>ruble</button>
-			<button onClick={() => (onClickFilterHundler('dollar'))}>dollar</button>
-		</>
+		<Money moneyAll={filtersMoney} moneyRemove={moneyRemove} filterMoney={filterMoney}></Money>
 	);
 }
 
